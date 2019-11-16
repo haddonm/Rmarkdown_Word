@@ -1,0 +1,86 @@
+
+' Malcolm Haddon: 
+' Feel free to use and modify these word macros but remember
+' that macros are powerful and if you get it wrong can easily
+' mess up your document.
+
+' Copy these macros into your Normal.dot and, ideally, attach
+' at least the fixdoc() macro [at the bottom] to a button on 
+' the quick access toolbar.
+
+Sub fixtable()
+'
+' fixtable Macro
+'
+'
+    Dim tbl As Table
+    For Each tbl In ActiveDocument.Tables
+
+        tbl.AutoFitBehavior (wdAutoFitWindow)
+        With (tbl)
+            With .Borders(wdBorderTop)
+                .LineStyle = wdLineStyleSingle
+                .LineWidth = wdLineWidth050pt
+                .Color = wdColorAutomatic
+            End With
+            With .Borders(wdBorderBottom)
+                .LineStyle = wdLineStyleSingle
+                .LineWidth = wdLineWidth050pt
+                .Color = wdColorAutomatic
+            End With
+            .Font.Size = 9
+         tbl.TopPadding = CentimetersToPoints(0)
+        tbl.BottomPadding = CentimetersToPoints(0)
+        tbl.LeftPadding = CentimetersToPoints(0.1)
+        tbl.RightPadding = CentimetersToPoints(0.1)
+        tbl.Spacing = 0
+        tbl.AllowPageBreaks = True
+        tbl.AllowAutoFit = True
+         End With
+         tbl.Rows.HeightRule = wdRowHeightExactly
+         tbl.Rows.Height = CentimetersToPoints(0.5)
+    Next tbl
+
+End Sub
+
+
+Sub fixplots()
+'
+' Centers all inline plots in the document
+'
+For Each ILShp In ActiveDocument.InlineShapes
+    ILShp.Select
+    Selection.ParagraphFormat.Alignment = wdAlignParagraphCenter
+Next
+
+End Sub
+
+Sub fix_Equations()
+
+Dim oRng As Word.Range
+Set oRng = ActiveDocument.Range
+With oRng.Find
+  .Text = "Equ."
+  While .Execute
+    oRng.Select
+    Selection.EndKey Unit:=wdLine
+    Selection.TypeText Text:=vbTab
+    Selection.Delete Unit:=wdCharacter, Count:=1
+    Selection.HomeKey Unit:=wdLine
+    Selection.EndKey Unit:=wdLine, Extend:=wdExtend
+    Selection.Font.Size = 12
+    Selection.EndKey Unit:=wdLine, Extend:=wdExtend
+    Selection.EndKey Unit:=wdLine
+    Selection.EndKey Unit:=wdLine
+  Wend
+End With
+
+End Sub
+
+Sub fixdoc()
+
+Call fix_Equations
+Call fixtable
+Call fixplots
+
+End Sub

@@ -1,0 +1,98 @@
+---
+title: "The Title of Your Document"
+author: "Your Name"
+date: "`r format(Sys.time(), '%d&period; %B %Y')`"
+output: 
+    word_document:
+      reference_docx:  C:\Users\Malcolm\Dropbox\A_Book\book\trialreferencestyle.docx
+      toc: true
+      toc_depth: 3
+      fig_caption: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = TRUE,
+	message = FALSE,
+	warning = FALSE)
+
+options(knitr.kable.NA = "",
+        knitr.table.format = "pandoc")
+
+wkdir <- "./../../A_Book/book/"
+
+options("show.signif.stars"=FALSE,"stringsAsFactors"=FALSE,
+        "max.print"=50000,"width"=240)
+
+#library(X)
+library(knitr)
+library(captioner)
+# library(Y)
+# library(Z)
+
+tab_nums <- captioner(prefix = "Table")
+fig_nums <- captioner(prefix = "Figure")
+equ_nums <- captioner(prefix = "Equ.")
+
+
+```
+
+# Introduction
+
+
+
+```{r}
+ans <- matrix(rnorm(25),ncol=5,nrow=5,dimnames=list(1:5,1:5))
+
+```
+
+`r tab_nums("t1", caption=" 25 random normal numbers illustrating the use of tab_nums.")`
+
+```{r echo=FALSE}
+kable(ans,digits=c(3,3,3,3,3),row.names = TRUE)
+
+```
+
+
+
+And here is a bunch of informative text.
+
+
+# Methods
+
+
+
+```{r fig.width=4.75, fig.height=2.75, echo=FALSE}
+data(faithful)
+par(mfrow=c(1,1),mai=c(0.45,0.45,0.05,0.05),oma=c(0,0,0,0)) 
+par(cex=0.75, mgp=c(1.35,0.35,0), font.axis=7,font=7,font.lab=7) 
+hist(faithful[,"eruptions"],breaks=24,col=2,main="")
+label <- " A quick example using the faithful eruption data to illustrate the use of fig_nums."
+```
+
+`r fig_nums("f1",caption=label)`
+
+
+Yet nore text introducing the following equation.
+
+The concept of confidence intervals (often 90% or 95% CI) is classically defined in Snedecor and Cochran (1967, 1989), and very many others, as:
+
+`r equ_nums("e1")`
+
+$$\bar{x}\pm {{t}_{\nu}}\frac{\sigma }{\sqrt{n}}$$
+
+where $\hat{x}$ is the mean of the sample of $n$ observations, and we refer to __Equ `r equ_nums("e1", display="num")`__.  Notice that I did not use a fullstop when refering to equation 1. Try running the macro with and without a fullstop to see why.
+
+Of course you will need to provide your own reference document and modify the styles within that to get the formatting you desire.
+
+
+
+
+
+
+
+
+
+<!-- ```{r child="i_References.Rmd"} -->
+
+<!-- ``` -->
