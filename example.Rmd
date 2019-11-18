@@ -53,7 +53,7 @@ kable(ans,digits=c(3,3,3,3,3),row.names = TRUE)
 
 ```
 
-
+###### l I have defined the 6th level header with a small font and white ink
 
 And here is a bunch of informative text.
 
@@ -72,6 +72,7 @@ label <- " A quick example using the faithful eruption data to illustrate the us
 
 `r fig_nums("f1",caption=label)`
 
+##### p and the 5th level header as requiring a page break beforehand
 
 Yet nore text introducing the following equation.
 
