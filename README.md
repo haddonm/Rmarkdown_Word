@@ -10,15 +10,11 @@ A typical arrangement put into the setup R code following the YAML hgeader might
 library(captioner)
 
 tab_nums <- captioner(prefix = "Table")
+
 fig_nums <- captioner(prefix = "Figure")
+
 equ_nums <- captioner(prefix = "Equ.")
 
-which might be used in the body of the document like:
-
-
-`r equ_nums("d1")`
-
-$${{N}_{t+1}}={{N}_{t}}+{{r}{N}_{t}}\left( 1-{{\left( \frac{{{N}_{t}}}{K} \right)}} \right)-{{C}_{t}}$$
-
+See the example.Rmd file for how this might be used in action.
 
 Notice the title of each equation, set in the setup, starts with Equ. where the "." is important. It is important because when I refer to an equation in the text I omit the fullstop. That way, when the macro lines up the number with the equation it only makes those changes for display equations and not references to equations in the text.
